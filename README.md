@@ -48,6 +48,7 @@ Click devices > CLI or Config tab.
 (Repeat for others: Router1 Gig0/0: 10.0.12.2/30, Gig0/1: 10.0.23.2/30; Router2: 10.0.23.3/30, Gig0/1: 192.168.2.1/24; PC1: 192.168.2.10/24, Gateway: 192.168.2.1.)
 
 ![IP Config](images/ip-config.png)
+
 *CLI output for Router0 interfaces.*
 
 ### Step 3: Static Routing
@@ -60,7 +61,8 @@ On each router (CLI: `enable` > `conf t`):
 Test: PC0 > Desktop > Command Prompt: `ping 192.168.2.10` (Success?).
 
 ![Route Table](images/route-table.png)
-*`show ip route` on Router1—note 'S' for static.*
+
+*`show ip route` on Router0—note 'S' for static.*
 
 ### Step 4: Switch to Dynamic OSPF
 Clear statics: `no ip route ...`  
@@ -94,7 +96,7 @@ Drag PC2 + Switch2. Connect to Router1 (or sim IP: 172.16.1.10/24). Add temp rou
 ![Ping Blocked](images/ping-blocked.png)
 *Rogue ping dropped—check sim mode for red packet icon.*
 
-![Simulation Drop](images/sim-mode.png)
+![Simulation Drop](images/sim-drop.png)
 *Simulation view: ACL filtering inbound traffic.*
 
 ### Troubleshooting
