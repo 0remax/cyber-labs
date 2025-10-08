@@ -42,3 +42,72 @@ Click devices > CLI or Config tab.
 
 **PC1:** IP: 192.168.1.10/24, Gateway: 192.168.1.1  
 **Router1:**  
+
+
+
+(Repeat for others: Router2 Gig0/0: 10.0.12.2/30, Gig0/1: 10.0.23.2/30; Router3: 10.0.23.3/30, Gig0/1: 192.168.2.1/24; PC2: 192.168.2.10/24, Gateway: 192.168.2.1.)
+
+![IP Config](images/ip-config.png)
+*CLI output for Router1 interfaces.*
+
+### Step 3: Static Routing
+On each router (CLI: `enable` > `conf t`):
+
+**Router1:** `ip route 192.168.2.0 255.255.255.0 10.0.12.2`  
+**Router2:** `ip route 192.168.1.0 255.255.255.0 10.0.12.1` & `ip route 192.168.2.0 255.255.255.0 10.0.23.3`  
+**Router3:** `ip route 192.168.1.0 255.255.255.0 10.0.23.2`  
+
+Test: PC1 > Desktop > Command Prompt: `ping 192.168.2.10` (Success?).
+
+![Route Table](images/route-table.png)
+*`show ip route` on Router2—note 'S' for static.*
+
+### Step 4: Switch to Dynamic OSPF
+Clear statics: `no ip route ...`  
+All routers:  
+
+
+
+Re-ping PC1 to PC2. `show ip route` shows 'O' for OSPF.
+
+![Ping Success](images/ping-success.png)
+*Inter-site ping working via dynamic routes.*
+
+## Enhancing Security: Adding ACLs to Block Unauthorized Subnets
+
+Protect Site B (192.168.2.0/24) from rogue subnet (172.16.1.0/24) on Router2.
+
+### Step 1: Add Rogue Test Device
+Drag PC3 + Switch3. Connect to Router2 (or sim IP: 172.16.1.10/24). Add temp route: `ip route 172.16.1.0 255.255.255.0 Null0`.
+
+### Step 2: Configure Extended ACL on Router2
+
+
+![ACL Config](images/acl-config.png)
+*Creating and applying ACL 101.*
+
+### Step 3: Verify
+- `show access-lists` (counters on deny).  
+- Legit ping (PC1 to PC2): Succeeds.  
+- Rogue ping (PC3 to PC2): Fails.
+
+![Ping Blocked](images/ping-blocked.png)
+*Rogue ping dropped—check sim mode for red packet icon.*
+
+![Simulation Drop](images/sim-mode.png)
+*Simulation view: ACL filtering inbound traffic.*
+
+### Troubleshooting
+- Ping fails? Check ACL direction (inbound on source interface).  
+- `show ip access-lists` for hits.
+
+## Next Steps & Cyber Insights
+- **Attack Sim:** Use Kali's hping3 for DoS floods—watch ACL counters.  
+- **Advanced:** Reflexive ACLs for stateful filtering.  
+- **Resources:** [Cisco ACL Guide](https://www.cisco.com/c/en/us/support/docs/ip/access-lists/13608-21.html).  
+
+*Lab by [Your Name] | Updated Oct 2025 | [View on GitHub](https://github.com/yourusername/cyber-labs)*
+
+---
+
+**Questions?** Fork this repo and experiment!
