@@ -30,8 +30,8 @@ As a cybersecurity researcher, mastering IP Routing is essential—attackers exp
 
 ### Step 1: Build Topology
 1. Open Packet Tracer > New project.
-2. Drag: 3x 2911 Routers (Router1, Router2, Router3), 2x PCs (PC1, PC2), 2x Switches.
-3. Connect: PC1 → Switch1 → Router1 Gig0/0; Router1 Gig0/1 → Router2 Gig0/0; Router2 Gig0/1 → Router3 Gig0/0; Router3 Gig0/1 → Switch2 → PC2.
+2. Drag: 3x 2911 Routers (Router0, Router1, Router2), 2x PCs (PC0, PC1), 2x Switches.
+3. Connect: PC0 → Switch0 → Router0 Gig0/0; Router0 Gig0/1 → Router1 Gig0/0; Router1 Gig0/1 → Router2 Gig0/0; Router2 Gig0/1 → Switch1 → PC1.
    - Use Copper Straight-Through cables.
 
 ![Topology Screenshot](images/topology.png)
@@ -40,27 +40,27 @@ As a cybersecurity researcher, mastering IP Routing is essential—attackers exp
 ### Step 2: Assign IP Addresses
 Click devices > CLI or Config tab.
 
-**PC1:** IP: 192.168.1.10/24, Gateway: 192.168.1.1  
-**Router1:**  
+**PC0:** IP: 192.168.1.10/24, Gateway: 192.168.1.1  
+**Router0:**  
 
 
 
-(Repeat for others: Router2 Gig0/0: 10.0.12.2/30, Gig0/1: 10.0.23.2/30; Router3: 10.0.23.3/30, Gig0/1: 192.168.2.1/24; PC2: 192.168.2.10/24, Gateway: 192.168.2.1.)
+(Repeat for others: Router1 Gig0/0: 10.0.12.2/30, Gig0/1: 10.0.23.2/30; Router2: 10.0.23.3/30, Gig0/1: 192.168.2.1/24; PC1: 192.168.2.10/24, Gateway: 192.168.2.1.)
 
 ![IP Config](images/ip-config.png)
-*CLI output for Router1 interfaces.*
+*CLI output for Router0 interfaces.*
 
 ### Step 3: Static Routing
 On each router (CLI: `enable` > `conf t`):
 
-**Router1:** `ip route 192.168.2.0 255.255.255.0 10.0.12.2`  
-**Router2:** `ip route 192.168.1.0 255.255.255.0 10.0.12.1` & `ip route 192.168.2.0 255.255.255.0 10.0.23.3`  
-**Router3:** `ip route 192.168.1.0 255.255.255.0 10.0.23.2`  
+**Router0:** `ip route 192.168.2.0 255.255.255.0 10.0.12.2`  
+**Router1:** `ip route 192.168.1.0 255.255.255.0 10.0.12.1` & `ip route 192.168.2.0 255.255.255.0 10.0.23.3`  
+**Router2:** `ip route 192.168.1.0 255.255.255.0 10.0.23.2`  
 
-Test: PC1 > Desktop > Command Prompt: `ping 192.168.2.10` (Success?).
+Test: PC0 > Desktop > Command Prompt: `ping 192.168.2.10` (Success?).
 
 ![Route Table](images/route-table.png)
-*`show ip route` on Router2—note 'S' for static.*
+*`show ip route` on Router1—note 'S' for static.*
 
 ### Step 4: Switch to Dynamic OSPF
 Clear statics: `no ip route ...`  
@@ -68,19 +68,19 @@ All routers:
 
 
 
-Re-ping PC1 to PC2. `show ip route` shows 'O' for OSPF.
+Re-ping PC0 to PC1. `show ip route` shows 'O' for OSPF.
 
 ![Ping Success](images/ping-success.png)
 *Inter-site ping working via dynamic routes.*
 
 ## Enhancing Security: Adding ACLs to Block Unauthorized Subnets
 
-Protect Site B (192.168.2.0/24) from rogue subnet (172.16.1.0/24) on Router2.
+Protect Site B (192.168.2.0/24) from rogue subnet (172.16.1.0/24) on Router1.
 
 ### Step 1: Add Rogue Test Device
-Drag PC3 + Switch3. Connect to Router2 (or sim IP: 172.16.1.10/24). Add temp route: `ip route 172.16.1.0 255.255.255.0 Null0`.
+Drag PC2 + Switch2. Connect to Router1 (or sim IP: 172.16.1.10/24). Add temp route: `ip route 172.16.1.0 255.255.255.0 Null0`.
 
-### Step 2: Configure Extended ACL on Router2
+### Step 2: Configure Extended ACL on Router1
 
 
 ![ACL Config](images/acl-config.png)
@@ -88,8 +88,8 @@ Drag PC3 + Switch3. Connect to Router2 (or sim IP: 172.16.1.10/24). Add temp rou
 
 ### Step 3: Verify
 - `show access-lists` (counters on deny).  
-- Legit ping (PC1 to PC2): Succeeds.  
-- Rogue ping (PC3 to PC2): Fails.
+- Legit ping (PC0 to PC1): Succeeds.  
+- Rogue ping (PC2 to PC1): Fails.
 
 ![Ping Blocked](images/ping-blocked.png)
 *Rogue ping dropped—check sim mode for red packet icon.*
