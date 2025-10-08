@@ -108,7 +108,7 @@ Drag PC2 + Switch2. Connect to Router1 (or sim IP: 172.16.1.10/24). Add temp rou
 - **Advanced:** Reflexive ACLs for stateful filtering.  
 - **Resources:** [Cisco ACL Guide](https://www.cisco.com/c/en/us/support/docs/ip/access-lists/13608-21.html).  
 
-*Lab by [Your Name] | Updated Oct 2025 | [View on GitHub](https://github.com/yourusername/cyber-labs)*
+*Lab by Emmanuel Oreoluwa Olukolu (Oremax). | Updated 8th Oct, 2025 | [View on GitHub](https://github.com/0remax/cyber-labs)*
 
 ---
 
