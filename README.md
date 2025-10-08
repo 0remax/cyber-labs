@@ -13,7 +13,7 @@ As a cybersecurity researcher, mastering IP Routing is essential—attackers exp
 **Lab Time:** 1-2 hours  
 **Tools:** Cisco Packet Tracer (free download from Cisco Networking Academy)  
 **Security Focus:** Prevent lateral movement via route filtering.  
-**Download:** [routing_lab.pkt](labs/routing_lab.pkt) (Upload your .pkt file to a `labs/` folder for sharing.)
+**Download:** [routing_lab.pkt](labs/routing_lab.pkt)
 
 ## Key Concepts
 - **IP Routing:** Directs packets between subnets using routing tables (static: manual; dynamic: protocols like OSPF).
@@ -35,7 +35,7 @@ As a cybersecurity researcher, mastering IP Routing is essential—attackers exp
    - Use Copper Straight-Through cables.
 
 ![Topology Screenshot](images/topology.png)
-*Your built network—ensure all links are green.*
+*Your built network—ensure all links are green. Apply "no shutdown"*
 
 ### Step 2: Assign IP Addresses
 Click devices > CLI or Config tab.
