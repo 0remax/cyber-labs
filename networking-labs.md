@@ -33,3 +33,8 @@ ip access-list extended EXTERNAL_PERIMETER_ACL
  ! Enforce: Deny all unauthorized internal traversal attempts
  deny ip any 10.10.10.0 0.0.0.255
  deny ip any 172.16.20.0 0.0.0.255 log
+```
+🧠 Operational Verification
+Run show ip interface brief to systematically audit logical sub-interfaces and trace dot1Q encapsulation line parameters.
+
+Validate stateful traffic isolation by testing endpoint visibility transitions across VLAN bounds.
