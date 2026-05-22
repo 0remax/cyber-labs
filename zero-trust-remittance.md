@@ -1,4 +1,3 @@
-```markdown
 # Prototype Architecture: Zero-Trust Cross-Border Fintech Remittances
 
 ### 💡 Core Architecture Definition
