@@ -15,10 +15,13 @@
       name: 'Emmanuel\'s Cyber Labs',
       repo: '0remax/cyber-labs',
       themeColor: '#0066cc',
-      homepage: 'README.md', // <-- Add this line
+      homepage: 'README.md',
       loadSidebar: true,
       autoHeader: true,
-      subMaxLevel: 2
+      subMaxLevel: 2,
+      alias: {
+        '.*\\/_sidebar.md': '_sidebar.md'
+      }
     }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
